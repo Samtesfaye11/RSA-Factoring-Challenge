@@ -1,19 +1,23 @@
-import math
-import sys
+def factorize(n):
+    if n == 2:
+        return n, 1
+    i = 2
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            if n != 1:
+                return n, i
+            else:
+                return n, 1
+    return n, 1
 
-def factorize_numbers(filename):
-    with open(filename, 'r') as file:
+if __name__ == "__main__":
+    import sys
+
+    with open(sys.argv[1], "r") as file:
         for line in file:
-            number = int(line.strip())
-            for factor in range(2, int(math.sqrt(number)) + 1):
-                if number % factor == 0:
-                    divisor = number // factor
-                    print(f"{number}={factor}*{divisor}")
-                    break
-
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-    else:
-        filename = sys.argv[1]
-        factorize_numbers(filename)
+            n = int(line.strip())
+            p, q = factorize(n)
+            print(f"n={p}*{q}")
